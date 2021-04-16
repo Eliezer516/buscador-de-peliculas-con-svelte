@@ -19,48 +19,89 @@
 </script>
 
 <main>
-	<div class="bg-white md:rounded-xl w-full h-full p-4">
-		<div class="flex flex-col mb-4">
-			<h1 class="text-5xl mb-4">Buscador de peliculas</h1>
-			<div class="flex">
-				<input type="text" {value} on:input={inputescrito} class="border border-black rounded outline-none text-2xl mr-4 p-2">
+	<div class="bg-white md:rounded-xl p-5">
+		<div class="flex pb-8 mb-8 border-b border-black relative flex-col md:flex-row">
+			<h1 class="text-5xl md:mr-4 text-center">Buscador de peliculas</h1>
+			<div class="flex flex-col md:flex-row md:ml-8 mt-8 md:mt-0">
+				<input type="text" {value} on:input={inputescrito} class="border border-black rounded outline-none text-2xl px-2">
 				{#if cargado}
-					<h3 class="text-3xl">Obteniendo datos...</h3>
+				<div class="loader relative p-8">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
 				{/if}
 			</div>
-
-
 		</div>
-		<div class="grid grid-cols-4 gap-4" id="cards">
+		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4" id="cards">
 			{#if respuesta.length > 0}
 			{#each respuesta as {Title, Year, Poster, Type}}
 			  <div class="rounded overflow-hidden shadow-lg">
-			    <img class="w-full" src={Poster} alt={Title}>
+			  	{#if Poster === "N/A"}
+			    	<img class="w-full" src="notfound.png" alt={Title}>
+			    {:else}
+			    	<img class="w-full" src={Poster} alt={Title}>
+			  	{/if}
 			    <div class="px-6 py-4">
 			      <div class="font-bold text-xl mb-2">{Title}</div>
-			      <p class="text-gray-700 text-base">
-			      	{Year}
+			      <p class="text-gray-700 text-lg">
+			      	Año: {Year}
 			      </p>
 			    </div>
-			    <div class="px-6 pt-4 pb-2">
+			    <div class="px-6 pb-2">
 			      <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{Type}</span>
 			    </div>
 			  </div>
 			{/each}
 			{/if}
-			<template id="template-card">
-				<div class="card border-2 border-black rounded-md">
-					<header class="p-2 text-2xl">
-					</header>
-					<img src="https://fakeimg.pl/300/" alt="hola" class="border-t-2 border-b-2 border-black">
-					<footer class="p-2">
-					</footer>
-				</div>
-			</template>
 		</div>
 	</div>
 </main>
 
 <style>
+	.loader span:nth-child(1){
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 30px;
+		height: 30px;
+		border: 3px solid black;
+		border-radius: 50%;
+		border-top: 3px solid transparent;
+		animation: animate 1s linear infinite;
+	}
+	.loader span:nth-child(2){
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 50px;
+		height: 50px;
+		border: 3px solid black;
+		border-radius: 50%;
+		border-bottom: 3px solid transparent;
+		animation: animate 2s linear infinite;
+	}
+	.loader span:nth-child(3){
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 10px;
+		height: 10px;
+		border: 3px solid black;
+		border-radius: 50%;
+		border-bottom: 3px solid transparent;
+		animation: animate 1s linear infinite;
+	}
 
+	@keyframes animate{
+		0%{
+			transform: translate(-50%, -50%) rotate(0deg);
+		}
+		100%{
+			transform: translate(-50%, -50%) rotate(360deg);
+		}
+	}
 </style>
