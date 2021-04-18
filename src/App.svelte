@@ -1,4 +1,9 @@
 <script>
+	import AOS from 'aos';
+	import 'aos/dist/aos.css';
+
+	AOS.init();
+
 	let value = '';
 	let respuesta = []
 	let cargado = false
@@ -15,7 +20,6 @@
 			cargado = false
 		})
 	}
-
 </script>
 
 <main>
@@ -25,7 +29,7 @@
 			<div class="flex flex-col md:flex-row md:ml-8 mt-8 md:mt-0">
 				<input type="text" {value} on:input={inputescrito} class="border border-black rounded outline-none text-2xl px-2">
 				{#if cargado}
-				<div class="loader relative p-8">
+				<div class="loader relative p-8" data-aos="fade">
 					<span></span>
 					<span></span>
 					<span></span>
@@ -36,7 +40,7 @@
 		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4" id="cards">
 			{#if respuesta.length > 0}
 			{#each respuesta as {Title, Year, Poster, Type}}
-			  <div class="rounded overflow-hidden shadow-lg">
+			  <div class="rounded overflow-hidden shadow-lg" data-aos="fade-up">
 			  	{#if Poster === "N/A"}
 			    	<img class="w-full" src="notfound.png" alt={Title}>
 			    {:else}
